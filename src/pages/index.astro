@@ -1,18 +1,152 @@
 ---
-
+import Base from '../layouts/Base.astro';
+const tel = '+336XXXXXXXX'; // À REMPLACER
 ---
 
-<html lang="fr">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>L'achimiste - Restaurant à Cucuron</title>
-	</head>
-	<body>
-		<h1>L'achimiste</h1>
-		<p>Bienvenue sur le site de L'achimiste, votre restaurant à Cucuron!</p>			
-	</body>
-</html>
+<Base>
+	<!-- ===== Accroche ===== -->
+	<section class="hero sur-bleu">
+		<div class="deux-colonnes">
+			<div class="hero-texte">
+				<p class="surtitre">Restaurant · Bar à cocktails · Cucuron</p>
+				<h1>Cuisine d'explorateur, <em>alchimie</em> de saison.</h1>
+				<p class="intro">
+					Produits locaux, techniques du monde entier, tout fait maison. Une cuisine qui se transforme au fil des
+					semaines, dans une bâtisse voûtée au cœur du village.
+				</p>
+				<div class="boutons">
+					<a href="/carte" class="bouton bouton-orange">Voir la carte de la semaine</a>
+					<a href={`tel:${tel}`} class="bouton bouton-contour">Réserver par téléphone</a>
+				</div>
+			</div>
+			<img
+				class="hero-photo"
+				src="/photos/salle-voutee-paysage.jpg"
+				alt="La salle voûtée du restaurant, tables dressées devant les grandes fenêtres"
+				width="1100"
+				height="727"
+			/>
+		</div>
+	</section>
+
+	<!-- ===== Cuisine & cocktails ===== -->
+	<section class="section">
+		<div class="titre-ligne">
+			<h2>Dans l'assiette <em>&amp;</em> dans le verre</h2>
+			<p>Cuisson, fermentation, distillation : chaque ingrédient passe par l'atelier. Au bar, les cocktails suivent la même logique.</p>
+		</div>
+		<div class="trio">
+			<figure>
+				<img src="/photos/plat-viande-puree.jpg" alt="Viande confite, purée et pickles d'oignon rouge" loading="lazy" />
+				<figcaption>La cuisine · carte de la semaine</figcaption>
+			</figure>
+			<figure class="decale">
+				<img src="/photos/plat-cocktail.jpg" alt="Une assiette et un cocktail sur une table en bois" loading="lazy" />
+				<figcaption>Accords assiette &amp; cocktail</figcaption>
+			</figure>
+			<figure>
+				<img src="/photos/cocktail-agrume.jpg" alt="Cocktail mousseux garni d'une rondelle d'agrume séchée" loading="lazy" />
+				<figcaption>Le bar à cocktails</figcaption>
+			</figure>
+		</div>
+		<p class="centre"><a href="/carte" class="lien-fort">Découvrir la carte de la semaine →</a></p>
+	</section>
+
+	<!-- ===== Notre histoire ===== -->
+	<section id="histoire" class="histoire sur-bleu">
+		<div class="deux-colonnes">
+			<div class="histoire-texte">
+				<p class="surtitre">Notre histoire</p>
+				<h2>Yannis Ouaked cuisine comme on explore.</h2>
+				<p>
+					Des produits d'ici, choisis au rythme des saisons, puis transformés : cuits, fermentés, distillés. Des
+					techniques glanées de par le monde viennent dialoguer avec le terroir du Luberon.
+				</p>
+			</div>
+			<img src="/photos/cocktail-basilic.jpg" alt="Cocktail au basilic devant deux appliques lumineuses" loading="lazy" />
+		</div>
+	</section>
+
+	<!-- ===== En journée ===== -->
+	<section class="section jour">
+		<div class="deux-colonnes">
+			<div>
+				<p class="surtitre">En journée</p>
+				<h2>Un café, un matcha, une pause.</h2>
+				<p>Espresso, hojicha, kombucha artisanal, citronnade maison et gourmandises du jour, à l'intérieur ou dans le patio.</p>
+			</div>
+			<div class="duo">
+				<img src="/photos/patio.jpg" alt="Le patio en pierre avec guirlandes lumineuses et plantes" loading="lazy" />
+				<img class="decale" src="/photos/appliques-the.jpg" alt="Deux appliques lumineuses au-dessus d'une étagère à thés" loading="lazy" />
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== Infos pratiques ===== -->
+	<section id="infos" class="section infos">
+		<div>
+			<h3>Horaires</h3>
+			<p>Café : [JOURS] · [HEURES]<br />Restaurant : [JOURS] · [HEURES]<br />Fermé le [JOUR]</p>
+		</div>
+		<div>
+			<h3>Adresse</h3>
+			<p>[RUE]<br />84160 Cucuron<br /><a href="#">Itinéraire →</a></p>
+		</div>
+		<div>
+			<h3>Réservation</h3>
+			<p>Uniquement par téléphone<br /><a href={`tel:${tel}`} class="tel">06 XX XX XX XX</a></p>
+		</div>
+	</section>
+</Base>
+
+<style>
+	/* Styles propres à la page d'accueil (Astro les limite automatiquement à cette page) */
+	.hero {
+		padding: 80px var(--marge) 96px;
+		background:
+			radial-gradient(circle at 75% 65%, var(--orange) 0%, rgba(238, 90, 43, 0.7) 14%, rgba(238, 90, 43, 0.18) 36%, rgba(10, 54, 180, 0) 58%),
+			var(--bleu);
+	}
+	.hero-texte { display: flex; flex-direction: column; gap: 26px; }
+	.hero h1 { font-size: clamp(44px, 5.4vw, 78px); letter-spacing: -1px; }
+	.hero h1 em { color: var(--orange-clair); }
+	.intro { font-size: 20px; max-width: 520px; }
+	.boutons { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 6px; }
+	.hero-photo { width: 100%; height: clamp(360px, 42vw, 600px); object-fit: cover; border-radius: 280px 280px 8px 8px; box-shadow: 0 0 120px rgba(238, 90, 43, 0.55); }
+
+	.titre-ligne { display: flex; justify-content: space-between; align-items: flex-end; gap: 48px; margin-bottom: 48px; flex-wrap: wrap; }
+	.titre-ligne h2 { font-size: clamp(38px, 4vw, 56px); max-width: 640px; }
+	.titre-ligne h2 em { color: var(--vermillon); }
+	.titre-ligne p { max-width: 440px; color: var(--gris); }
+	.trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+	figure { margin: 0; display: flex; flex-direction: column; gap: 12px; }
+	figure img { width: 100%; height: 520px; object-fit: cover; border-radius: 8px; }
+	figcaption { font-size: 15px; color: #6b6258; }
+	.decale { margin-top: 64px; }
+	.centre { text-align: center; margin-top: 40px; }
+	.lien-fort { font-weight: 600; text-underline-offset: 6px; }
+
+	.histoire { background: radial-gradient(circle at 18% 40%, rgba(238, 90, 43, 0.55) 0%, rgba(238, 90, 43, 0) 45%), var(--bleu); }
+	.histoire .deux-colonnes { gap: 0; align-items: stretch; }
+	.histoire-texte { padding: 96px var(--marge); display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+	.histoire h2 { font-size: clamp(36px, 3.8vw, 52px); }
+	.histoire img { width: 100%; height: 100%; min-height: 420px; object-fit: cover; }
+
+	.jour { background: var(--orange); }
+	.jour h2 { font-size: clamp(34px, 3.4vw, 48px); margin: 14px 0 18px; }
+	.duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+	.duo img { width: 100%; height: 420px; object-fit: cover; border-radius: 8px; }
+
+	.infos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px; }
+	.infos h3 { font-size: 28px; color: var(--bleu); margin-bottom: 10px; }
+	.tel { font-size: 22px; font-weight: 600; }
+
+	@media (max-width: 900px) {
+		.hero { padding: 48px var(--marge) 64px; }
+		.trio, .infos { grid-template-columns: 1fr; }
+		figure img { height: 380px; }
+		.decale { margin-top: 0; }
+		.histoire-texte { padding: 64px var(--marge); }
+		.duo img { height: 260px; }
+	}
+</style>

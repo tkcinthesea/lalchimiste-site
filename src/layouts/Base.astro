@@ -1,0 +1,133 @@
+---
+// Gabarit commun à toutes les pages : <head>, en-tête, pied de page.
+// Chaque page l'utilise avec <Base title="..."> ... </Base>
+interface Props {
+	title?: string;
+	description?: string;
+}
+const {
+	title = "L'Alchimiste — Restaurant à Cucuron",
+	description = "Cuisine d'explorateur et cocktails au cœur de Cucuron. Produits locaux, tout fait maison.",
+} = Astro.props;
+const tel = '+336XXXXXXXX'; // À REMPLACER par le vrai numéro
+const telAffiche = '06 XX XX XX XX';
+---
+
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!-- Aperçu : on demande aux moteurs de recherche de ne pas indexer le site tant qu'il n'est pas validé -->
+		<meta name="robots" content="noindex, nofollow" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="icon" type="image/png" href="/logo.png" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Instrument+Sans:wght@400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<body>
+		<p class="apercu">Aperçu de travail — contenus provisoires, non publié</p>
+
+		<header class="entete">
+			<a href="/" class="logo" aria-label="L'Alchimiste — accueil">
+				<img src="/logo.png" alt="L'Alchimiste" width="64" height="64" />
+			</a>
+			<nav class="nav" aria-label="Navigation principale">
+				<a href="/carte">La carte</a>
+				<a href="/#histoire">Notre histoire</a>
+				<a href="/#infos">Infos &amp; réservation</a>
+				<a href={`tel:${tel}`} class="bouton bouton-orange nav-reserver">Réserver · {telAffiche}</a>
+			</nav>
+		</header>
+
+		<main>
+			<slot />
+		</main>
+
+		<footer class="pied">
+			<img src="/logo.png" alt="L'Alchimiste" width="48" height="48" />
+			<div class="pied-liens">
+				<a href="#">Instagram</a>
+				<a href="#">Mentions légales</a>
+				<span>© 2026 L'Alchimiste · Cucuron</span>
+			</div>
+		</footer>
+
+		<!-- Bouton d'appel fixé en bas, visible seulement sur mobile -->
+		<a href={`tel:${tel}`} class="bouton bouton-orange cta-mobile">Réserver · {telAffiche}</a>
+	</body>
+</html>
+
+<style is:global>
+	/* ---------- Charte : les couleurs et polices en un seul endroit ---------- */
+	:root {
+		--bleu: #0a36b4;
+		--orange: #ee5a2b;
+		--orange-clair: #ff7a45;
+		--vermillon: #b5391a;
+		--creme: #f5eee3;
+		--encre: #14120f;
+		--ambre: #ffc56b;
+		--texte-sur-bleu: #dce2f5;
+		--gris: #4a433a;
+		--serif: 'Bodoni Moda', Georgia, serif;
+		--sans: 'Instrument Sans', system-ui, sans-serif;
+		--marge: clamp(20px, 5.5vw, 80px);
+	}
+
+	* { box-sizing: border-box; }
+	body { margin: 0; background: var(--creme); color: var(--encre); font-family: var(--sans); font-size: 18px; line-height: 1.6; }
+	img { max-width: 100%; display: block; }
+	a { color: var(--vermillon); }
+	h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.06; margin: 0; }
+	p { margin: 0; }
+
+	.apercu { margin: 0; background: var(--encre); color: var(--ambre); text-align: center; font-size: 13px; padding: 6px; letter-spacing: 1px; }
+
+	/* ---------- En-tête ---------- */
+	.entete { background: var(--bleu); display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 12px var(--marge); border-bottom: 1px solid rgba(247, 239, 230, 0.18); }
+	.logo img { border-radius: 6px; }
+	.nav { display: flex; align-items: center; gap: 36px; font-weight: 500; font-size: 16px; }
+	.nav a:not(.bouton) { color: #f7efe6; text-decoration: none; }
+	.nav a:not(.bouton):hover { text-decoration: underline; text-underline-offset: 6px; }
+
+	/* ---------- Boutons ---------- */
+	.bouton { display: inline-block; text-decoration: none; font-weight: 600; border-radius: 999px; padding: 16px 28px; font-size: 17px; }
+	.bouton-orange { background: var(--orange); color: var(--encre); }
+	.bouton-orange:hover { background: var(--orange-clair); }
+	.bouton-contour { border: 1.5px solid #f7efe6; color: #f7efe6; }
+	.nav .bouton { padding: 12px 22px; font-size: 16px; }
+
+	/* ---------- Mises en page réutilisables ---------- */
+	.section { padding: 96px var(--marge); }
+	.deux-colonnes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px; align-items: center; }
+	.surtitre { font-size: 14px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+	.sur-bleu { background: var(--bleu); color: #f7efe6; }
+	.sur-bleu p { color: var(--texte-sur-bleu); }
+	.sur-bleu .surtitre { color: var(--ambre); }
+
+	/* ---------- Pied de page ---------- */
+	.pied { background: var(--bleu); color: var(--texte-sur-bleu); padding: 48px var(--marge) 56px; display: flex; justify-content: space-between; align-items: center; gap: 24px; font-size: 15px; flex-wrap: wrap; }
+	.pied img { border-radius: 4px; }
+	.pied-liens { display: flex; gap: 28px; flex-wrap: wrap; }
+	.pied a { color: var(--texte-sur-bleu); }
+
+	.cta-mobile { display: none; }
+
+	/* ---------- Mobile : en dessous de 900 px de large ---------- */
+	@media (max-width: 900px) {
+		body { font-size: 17px; }
+		.deux-colonnes { grid-template-columns: 1fr; gap: 40px; }
+		.section { padding: 64px var(--marge); }
+		.entete { flex-wrap: wrap; }
+		.nav { gap: 20px; font-size: 15px; overflow-x: auto; }
+		.nav-reserver { display: none; }
+		.cta-mobile { display: block; position: fixed; left: 16px; right: 16px; bottom: 16px; text-align: center; z-index: 10; box-shadow: 0 8px 28px rgba(238, 90, 43, 0.45); }
+		.pied { padding-bottom: 110px; }
+	}
+</style>

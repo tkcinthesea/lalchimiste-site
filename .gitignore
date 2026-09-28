@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# captures d'écran sources (lourdes) : on ne garde en ligne que les photos optimisées de public/photos
+Photos officielles/

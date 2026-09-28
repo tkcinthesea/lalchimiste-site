@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+
+// Pour l'instant la carte est écrite ici, en dur.
+// Plus tard, ces données viendront de la base Supabase (étape suivante du projet).
+const P = '[PRIX]';
+const rubriques = [
+	{
+		id: 'cuisine',
+		titre: 'Cuisine',
+		groupes: [
+			{ titre: 'Entrées', plats: [
+				{ nom: '[Entrée de la semaine]', desc: '[Produit de saison, technique, garniture]', prix: P },
+				{ nom: '[Entrée de la semaine]', desc: '[…, ketchup myrtille]', prix: P },
+			] },
+			{ titre: 'Plats', plats: [
+				{ nom: '[Plat de la semaine]', desc: '[Viande ou poisson, cuisson, accompagnement]', prix: P },
+				{ nom: '[Plat de la semaine]', desc: '[Légume du marché, fermentation maison]', prix: P },
+				{ nom: '[Plat végétarien]', desc: '[Description]', prix: P },
+			] },
+			{ titre: 'Desserts', plats: [
+				{ nom: '[Dessert de la semaine]', desc: '[Description]', prix: P },
+				{ nom: 'Cookie maison', desc: '[Noisettes, chocolat]', prix: P },
+			] },
+		],
+	},
+	{
+		id: 'cocktails',
+		titre: 'Cocktails',
+		groupes: [
+			{ titre: 'Signatures', plats: [
+				{ nom: '[Cocktail signature]', desc: '[Distillat maison, agrume séché]', prix: P },
+				{ nom: '[Cocktail signature]', desc: '[Basilic, tomate cerise]', prix: P },
+			] },
+		],
+	},
+	{
+		id: 'vins',
+		titre: 'Vins',
+		groupes: [
+			{ titre: 'Au verre & à la bouteille', plats: [
+				{ nom: '[Vin]', desc: '[Domaine, appellation]', prix: P },
+			] },
+		],
+	},
+];
+
+// Boissons de jour : prix relevés sur l'ardoise (à confirmer)
+const cafe = [
+	['Espresso, Americano', '2'],
+	['Cappuccino, Latte', '4'],
+	['Matcha · Hojicha', '5'],
+	['Matcha latte · Chai latte', '6'],
+	['Kombucha artisanal', '6'],
+	['Citronnade maison', '2'],
+];
+---
+
+<Base title="La carte — L'Alchimiste, Cucuron">
+	<section class="entete-carte sur-bleu">
+		<h1>La carte</h1>
+		<p>Semaine du [DATE] · la carte change chaque semaine, au gré du marché.</p>
+	</section>
+
+	<nav class="onglets" aria-label="Rubriques de la carte">
+		{rubriques.map((r) => <a href={`#${r.id}`}>{r.titre}</a>)}
+		<a href="#cafe">Café</a>
+	</nav>
+
+	<div class="carte">
+		{rubriques.map((r) => (
+			<section id={r.id} class="rubrique">
+				{r.groupes.map((g) => (
+					<div class="groupe">
+						<h2>
+							<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C12.8 7 17 11.2 24 12C17 12.8 12.8 17 12 24C11.2 17 7 12.8 0 12C7 11.2 11.2 7 12 0Z" fill="currentColor" /></svg>
+							{g.titre}
+						</h2>
+						{g.plats.map((p) => (
+							<div class="plat">
+								<div>
+									<p class="nom">{p.nom}</p>
+									<p class="desc">{p.desc}</p>
+								</div>
+								<p class="prix">{p.prix}</p>
+							</div>
+						))}
+					</div>
+				))}
+			</section>
+		))}
+
+		<section id="cafe" class="cafe">
+			<h2>En journée, au comptoir</h2>
+			{cafe.map(([nom, prix]) => (
+				<div class="ligne"><span>{nom}</span><span>{prix}</span></div>
+			))}
+		</section>
+
+		<p class="note">Prix en euros, service compris. Allergènes : la liste détaillée est disponible sur place, demandez-nous. Tout est fait maison.</p>
+	</div>
+</Base>
+
+<style>
+	.entete-carte {
+		padding: 56px var(--marge) 48px;
+		background: radial-gradient(circle at 85% 90%, rgba(238, 90, 43, 0.85) 0%, rgba(238, 90, 43, 0) 55%), var(--bleu);
+	}
+	.entete-carte h1 { font-size: clamp(48px, 6vw, 80px); margin-bottom: 10px; }
+
+	.onglets { display: flex; gap: 10px; padding: 20px var(--marge); border-bottom: 1px solid #e2d6c3; overflow-x: auto; position: sticky; top: 0; background: var(--creme); z-index: 5; }
+	.onglets a { border: 1px solid #cdbfa9; color: var(--encre); text-decoration: none; padding: 10px 18px; border-radius: 999px; font-size: 15px; font-weight: 500; white-space: nowrap; }
+	.onglets a:hover { background: var(--bleu); color: #f7efe6; border-color: var(--bleu); }
+
+	.carte { max-width: 760px; margin: 0 auto; padding: 40px 20px 96px; display: flex; flex-direction: column; gap: 40px; }
+	.rubrique { display: flex; flex-direction: column; gap: 36px; scroll-margin-top: 90px; }
+	.groupe { display: flex; flex-direction: column; gap: 16px; }
+	.groupe h2 { display: flex; align-items: center; gap: 10px; font-style: italic; font-size: 30px; color: var(--vermillon); }
+	.plat { display: flex; justify-content: space-between; gap: 16px; padding-bottom: 16px; border-bottom: 1px dashed #d9c9b2; }
+	.nom { font-weight: 600; }
+	.desc { font-size: 15px; color: #5e564c; }
+	.prix { font-weight: 600; white-space: nowrap; }
+
+	.cafe { background: var(--orange); border-radius: 8px; padding: 28px 24px; display: flex; flex-direction: column; gap: 10px; scroll-margin-top: 90px; }
+	.cafe h2 { font-size: 30px; margin-bottom: 6px; }
+	.ligne { display: flex; justify-content: space-between; }
+	.note { font-size: 14px; color: #5e564c; }
+</style>
